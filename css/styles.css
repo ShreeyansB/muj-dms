@@ -1,0 +1,43 @@
+.selectDisable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#brand-image {
+  width: 60px;
+}
+
+#brand-text {
+  color: #4067b1;
+}
+
+li {
+  color: #4067b1;
+  font-weight: 500;
+}
+
+#my-footer {
+  background-color: #4067b1 !important;
+}
+
+#legend-text {
+  letter-spacing: 1px;
+  color: #4067b1;
+}
+
+#login-submit {
+  background-color: #4067b1;
+}
+
+.feat-bg {
+  color: #4067b1;
+}
+
+.divider {
+  color: black;
+  opacity: 0.07;
+}
