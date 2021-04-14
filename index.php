@@ -34,6 +34,7 @@
           </li>
           <li class="nav-item">
             <a href="https://jaipur.manipal.edu/muj/contact-us.html" class="nav-link">Help</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -49,7 +50,7 @@
       <div class="col-12 col-lg-6 align-self-center">
         <div class="container p-3 border rounded-3">
           <!-- LOGIN FORM -->
-          <form action="login.php" method="POST">
+          <form action="php/login.php" method="POST">
             <legend class="mb-3 h3" id="legend-text">LOGIN</legend>
             <div class="mb-3">
               <label for="inputRegNo" class="form-label">Registration Number</label>
@@ -126,7 +127,7 @@
   <!-- Footer -->
   <footer class="bg-dark py-4" id="my-footer">
     <div class="container">
-      <p class="text-center text-white user-select-none mb-0">&copy; Shreeyans Bahadkar, Manipal University,
+      <p class="text-center text-white mb-0">&copy; Shreeyans Bahadkar, Manipal University,
         jaipur.manipal.edu, Dehmi
         Kalan, Near GVK Toll Plaza, Jaipur-Ajmer Expressway, Jaipur, Rajasthan 303007.</p>
     </div>
