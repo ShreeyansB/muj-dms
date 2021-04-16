@@ -53,9 +53,75 @@ if (isset($_SESSION['regno'])) {
     </div>
   </nav>
 
-  <!-- Image and Form -->
+  <!-- Banner -->
+  <div id="banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 my-2" align="center">
+          <div class="card my-5 w-50 text-start">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img src="/img/avatar.png"" alt=" ..." class="img-fluid p-3 rounded">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">Floppa Flimppy</h5>
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  
+  <!-- Navs -->
+
+  <div class="container my-4">
+    <div class="row">
+      <div class="col-12" align="center">
+        <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="attendance-tab" data-bs-toggle="tab" data-bs-target="#attendance" type="button" role="tab" aria-controls="attendance" aria-selected="true">Attendance</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="timetable-tab" data-bs-toggle="tab" data-bs-target="#timetable" type="button" role="tab" aria-controls="timetable" aria-selected="false">Timetable</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="courses-tab" data-bs-toggle="tab" data-bs-target="#courses" type="button" role="tab" aria-controls="courses" aria-selected="false">Courses</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="grades-tab" data-bs-toggle="tab" data-bs-target="#grades" type="button" role="tab" aria-controls="grades" aria-selected="false">Grades</button>
+          </li>
+        </ul>
+        <div class="col-12 my-4" align="center">
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="attendance" role="tabpanel" aria-labelledby="attendance-tab">
+              <p class="text-start">Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
+                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
+                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
+                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id.
+                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex.</p>
+            </div>
+            <div class="tab-pane fade" id="timetable" role="tabpanel" aria-labelledby="timetable-tab">
+              <p>Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
+                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.</p>
+            </div>
+            <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
+              <p>Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
+                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.</p>
+            </div>
+            <div class="tab-pane fade" id="grades" role="tabpanel" aria-labelledby="grades-tab">
+              <p>Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
+                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Footer -->
   <footer class="bg-dark py-4" id="my-footer">

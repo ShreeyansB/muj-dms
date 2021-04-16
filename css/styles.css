@@ -7,6 +7,14 @@
   user-select: none;
 }
 
+.dark-mode {
+  filter: invert(100%) hue-rotate(180deg)
+}
+
+.inverted img, picture, video {
+  filter: invert(1) hue-rotate(180deg)
+}
+
 #brand-image {
   width: 60px;
 }
@@ -29,7 +37,7 @@ li {
   color: #4067b1;
 }
 
-#login-submit {
+#login-submit, #theme-btn {
   background-color: #4067b1;
 }
 
@@ -40,4 +48,10 @@ li {
 .divider {
   color: black;
   opacity: 0.07;
+}
+
+#banner {
+  background-image: url("/img/home_banner.png");
+  background-size: cover;
+  background-color: blueviolet;
 }

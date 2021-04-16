@@ -35,6 +35,9 @@
           <li class="nav-item">
             <a href="https://jaipur.manipal.edu/muj/contact-us.html" class="nav-link">Help</a>
           </li>
+          <li class="nav-item ms-1">
+            <button type="button" class="btn btn-primary" data-bs-toggle="button" autocomplete="off" id="theme-btn">🌗</button>
+          </li>
         </ul>
       </div>
     </div>
@@ -133,6 +136,13 @@
     </div>
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
+  <script>
+    let button = document.querySelector('#theme-btn')
+    button.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark-mode')
+      document.documentElement.classList.toggle('inverted')
+    })
+  </script>
 </body>
 
 </html>
