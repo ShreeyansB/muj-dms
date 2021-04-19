@@ -1,7 +1,26 @@
 <?php
+include "php/db_conn.php";
 session_start();
 
+function convNull($data)
+{
+  if ($data == "") {
+    return "-";
+  } else {
+    return $data;
+  }
+}
+
 if (isset($_SESSION['regno'])) {
+  $reg_no = $_SESSION['regno'];
+
+  $info_sql = "SELECT student.*, class.class_name FROM student JOIN class ON (reg_no = $reg_no AND student.class_id = class.class_id)";
+  $info_result = mysqli_query($conn, $info_sql);
+  if (mysqli_num_rows($info_result) === 1) {
+    $info_row = mysqli_fetch_assoc($info_result);
+  }
+
+  $att_sql = "SELECT course.course_name,learning.num_attended,learning.num_classes,learning.attendance FROM learning JOIN course ON (learning.course_id = course.course_id AND learning.reg_no = $reg_no) ORDER BY course_name";
 } else {
   header("Location: index.php?");
   exit();
@@ -48,6 +67,9 @@ if (isset($_SESSION['regno'])) {
           <li class="nav-item">
             <a href="php/logout.php" class="nav-link text-dark">Logout</a>
           </li>
+          <li class="nav-item ms-1">
+            <button type="button" class="btn btn-primary" data-bs-toggle="button" autocomplete="off" id="theme-btn">🌗</button>
+          </li>
         </ul>
       </div>
     </div>
@@ -57,21 +79,38 @@ if (isset($_SESSION['regno'])) {
   <div id="banner">
     <div class="container">
       <div class="row">
-        <div class="col-12 my-2" align="center">
-          <div class="card my-5 w-50 text-start">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="/img/avatar.png"" alt=" ..." class="img-fluid p-3 rounded">
+        <div class="col-2 col-md-1 col-lg-2 col-xl-3"></div>
+        <div class="col-8 col-md-10 col-lg-8 col-xl-6 my-2" align="center">
+          <div class="card my-5 text-start border border-0 shadow-lg">
+            <div class="row g-0 p-0">
+              <div class="col-12 col-md-4 pt-4 pt-md-0 d-flex justify-content-center justify-content-md-start">
+                <img src="/img/avatar.png" alt="..." class="img-fluid rounded-start inverted">
               </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">Floppa Flimppy</h5>
-                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+              <div class="col-12 col-md-8 ps-2 ps-md-0 pt-2">
+                <div class="card-body ps-md-2">
+                  <text class="id-heading m-0">NAME</text>
+                  <h5 class="card-title mb-2 mb-2"><?php echo "{$info_row['first_name']} {$info_row['last_name']}" ?></h5>
+                  <text class="id-heading">REGISTRATION NUMBER</text>
+                  <h5 class="card-title mb-2"><?php echo "{$info_row['reg_no']}" ?></h5>
+                  <div class="row">
+                    <div class="col-6">
+                      <text class="id-heading">SECTION</text>
+                      <h5 class="card-title mb-2"><?php echo "{$info_row['class_name']}" ?></h5>
+                    </div>
+                    <div class="col-6">
+                      <text class="id-heading">BRANCH</text>
+                      <h5 class="card-title mb-2"><?php echo "{$info_row['branch']}" ?></h5>
+                    </div>
+                  </div>
+                  <text class="id-heading">ACADEMIC YEAR</text>
+                  <h5 class="card-title mb-2"><?php echo "{$info_row['acad_year']}" ?></h5>
+
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="col-2 col-md-1 col-lg-2 col-xl-3"></div>
       </div>
     </div>
   </div>
@@ -83,7 +122,7 @@ if (isset($_SESSION['regno'])) {
       <div class="col-12" align="center">
         <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="attendance-tab" data-bs-toggle="tab" data-bs-target="#attendance" type="button" role="tab" aria-controls="attendance" aria-selected="true">Attendance</button>
+            <button class="nav-link active nav-head" id="attendance-tab" data-bs-toggle="tab" data-bs-target="#attendance" type="button" role="tab" aria-controls="attendance" aria-selected="true">Attendance</button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="timetable-tab" data-bs-toggle="tab" data-bs-target="#timetable" type="button" role="tab" aria-controls="timetable" aria-selected="false">Timetable</button>
@@ -97,24 +136,40 @@ if (isset($_SESSION['regno'])) {
         </ul>
         <div class="col-12 my-4" align="center">
           <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="attendance" role="tabpanel" aria-labelledby="attendance-tab">
-              <p class="text-start">Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
-                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
-                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
-                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id.
-                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex.</p>
+            <div class="tab-pane fade show active mt-3" id="attendance" role="tabpanel" aria-labelledby="attendance-tab">
+              <div class="container">
+                <table class="table table-hover rounded-3 border-3">
+                  <thead>
+                    <th scope="col">#</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Classes Attended</th>
+                    <th scope="col">Total Classes</th>
+                    <th scope="col">Attendance (%)</th>
+                  </thead>
+                  <tbody>
+                    <?php
+                    $i = 0;
+                    $att_result = mysqli_query($conn, $att_sql);
+                    while ($att_row = mysqli_fetch_assoc($att_result)) {
+                      $i++;
+                      echo "<tr>";
+                      echo "<th scope=\"row\">{$i}</th>";
+                      echo "<td>{$att_row["course_name"]}</td>";
+                      echo "<td>" . convNull($att_row["num_attended"]) . "</td>";
+                      echo "<td>" . convNull($att_row["num_classes"]) . "</td>";
+                      echo "<td>" . convNull($att_row["attendance"]) . "</td>";
+                      echo "</tr>";
+                    }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div class="tab-pane fade" id="timetable" role="tabpanel" aria-labelledby="timetable-tab">
-              <p>Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
-                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.</p>
-            </div>
-            <div class="tab-pane fade" id="courses" role="tabpanel" aria-labelledby="courses-tab">
-              <p>Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
-                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.</p>
-            </div>
-            <div class="tab-pane fade" id="grades" role="tabpanel" aria-labelledby="grades-tab">
-              <p>Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.
-                Quis officia laboris officia et cupidatat occaecat anim deserunt aliquip. Officia commodo est nulla ex. Deserunt duis reprehenderit Lorem deserunt sit est fugiat excepteur irure eu. Quis id ullamco cupidatat proident velit id. Aute consequat commodo occaecat ullamco consequat non dolore duis occaecat excepteur mollit nulla esse.</p>
+              <div class="container">
+                <p>Hello</p>
+              </div>
+
             </div>
           </div>
         </div>
@@ -132,6 +187,20 @@ if (isset($_SESSION['regno'])) {
     </div>
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
+  <script>
+    let on=false;
+    let button = document.querySelector('#theme-btn')
+    button.addEventListener('click', () => {
+      on = !on;
+      if(on == true) {
+        document.getElementById("banner").style.backgroundImage = "url(\"/img/home_banner_inv.png\")";
+      } else {
+        document.getElementById("banner").style.backgroundImage = "url(\"/img/home_banner.png\")";
+      }
+      document.documentElement.classList.toggle('dark-mode')
+      document.documentElement.classList.toggle('inverted')
+    })
+  </script>
 </body>
 
 </html>

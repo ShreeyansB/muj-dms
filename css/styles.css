@@ -7,12 +7,18 @@
   user-select: none;
 }
 
+* {
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
 .dark-mode {
   filter: invert(100%) hue-rotate(180deg)
 }
 
 .inverted img, picture, video {
-  filter: invert(1) hue-rotate(180deg)
+  filter: invert(1) hue-rotate(180deg);
 }
 
 #brand-image {
@@ -53,5 +59,20 @@ li {
 #banner {
   background-image: url("/img/home_banner.png");
   background-size: cover;
-  background-color: blueviolet;
+}
+
+.id-heading {
+  font-size: 0.95em;
+  letter-spacing: 0.3pt;
+  font-weight: 500;
+  color: #94a9be;
+}
+
+button[aria-selected='true'] {
+  font-weight: 500;
+}
+
+button[aria-selected='false'] {
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.623);
 }
