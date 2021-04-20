@@ -2,11 +2,27 @@
 include "php/db_conn.php";
 session_start();
 
-function convNull($data)
+function convNull($data) // To replace NULL value with "-"
 {
   if ($data == "") {
     return "-";
   } else {
+    return $data;
+  }
+}
+
+function genTtSql($reg_no, $day) // To generate query based on Day
+{
+  return "SELECT timetable.*,course_name FROM student JOIN class ON (student.reg_no = $reg_no AND student.class_id = class.class_id) JOIN timetable ON (timetable.class_id = class.class_id AND timetable.course_day = $day) JOIN course ON timetable.course_id = course.course_id ORDER BY course_day,course_slot";
+}
+
+function labCheck($data) { // To add emoji if current class is a lab class
+  if(preg_match('/\bLab\b/', $data)) {
+    $data .= " ";
+    $data .= "💻";
+    return $data;
+  }
+  else {
     return $data;
   }
 }
@@ -21,6 +37,8 @@ if (isset($_SESSION['regno'])) {
   }
 
   $att_sql = "SELECT course.course_name,learning.num_attended,learning.num_classes,learning.attendance FROM learning JOIN course ON (learning.course_id = course.course_id AND learning.reg_no = $reg_no) ORDER BY course_name";
+
+  $tt_sql = "SELECT timetable.* FROM student JOIN class ON (student.reg_no = $reg_no AND student.class_id = class.class_id) JOIN timetable ON timetable.class_id = class.class_id JOIN course ON timetable.course_id = course.course_id ORDER BY course_day,course_slot";
 } else {
   header("Location: index.php?");
   exit();
@@ -138,38 +156,86 @@ if (isset($_SESSION['regno'])) {
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active mt-3" id="attendance" role="tabpanel" aria-labelledby="attendance-tab">
               <div class="container">
-                <table class="table table-hover rounded-3 border-3">
-                  <thead>
-                    <th scope="col">#</th>
-                    <th scope="col">Course Name</th>
-                    <th scope="col">Classes Attended</th>
-                    <th scope="col">Total Classes</th>
-                    <th scope="col">Attendance (%)</th>
-                  </thead>
-                  <tbody>
-                    <?php
-                    $i = 0;
-                    $att_result = mysqli_query($conn, $att_sql);
-                    while ($att_row = mysqli_fetch_assoc($att_result)) {
-                      $i++;
-                      echo "<tr>";
-                      echo "<th scope=\"row\">{$i}</th>";
-                      echo "<td>{$att_row["course_name"]}</td>";
-                      echo "<td>" . convNull($att_row["num_attended"]) . "</td>";
-                      echo "<td>" . convNull($att_row["num_classes"]) . "</td>";
-                      echo "<td>" . convNull($att_row["attendance"]) . "</td>";
-                      echo "</tr>";
-                    }
-                    ?>
-                  </tbody>
-                </table>
+                <div class="table-responsive">
+                  <table class="table table-hover">
+                    <thead>
+                      <th scope="col">#</th>
+                      <th scope="col">Course Name</th>
+                      <th scope="col">Classes Attended</th>
+                      <th scope="col">Total Classes</th>
+                      <th scope="col">Attendance (%)</th>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $i = 0;
+                      $att_result = mysqli_query($conn, $att_sql);
+                      while ($att_row = mysqli_fetch_assoc($att_result)) {
+                        $i++;
+                        echo "<tr>";
+                        echo "<th scope=\"row\">{$i}</th>";
+                        echo "<td>{$att_row["course_name"]}</td>";
+                        echo "<td>" . convNull($att_row["num_attended"]) . "</td>";
+                        echo "<td>" . convNull($att_row["num_classes"]) . "</td>";
+                        echo "<td>" . convNull($att_row["attendance"]) . "</td>";
+                        echo "</tr>";
+                      }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
             <div class="tab-pane fade" id="timetable" role="tabpanel" aria-labelledby="timetable-tab">
               <div class="container">
-                <p>Hello</p>
+                <div class="table-responsive round-table">
+                  <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr class="table-myaccent">
+                        <th scope="col" style="width: 6%">Day/Time</th>
+                        <th scope="col" style="width: 8.8%">09:00-09:45</th>
+                        <th scope="col" style="width: 8.8%">09:55-10:40</th>
+                        <th scope="col" style="width: 8.8%">10:50-11:35</th>
+                        <th scope="col" style="width: 8.8%">11:45-12:30</th>
+                        <th scope="col" style="width: 8.8%">12:40-01:25</th>
+                        <th scope="col" style="width: 8.8%">01:35-02:20</th>
+                        <th scope="col" style="width: 8.8%">02:30-03:15</th>
+                        <th scope="col" style="width: 8.8%">03:25-04:10</th>
+                        <th scope="col" style="width: 8.8%">04:20-05:05</th>
+                        <th scope="col" style="width: 8.8%">05:15-06:00</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $i = 1;
+                      $days = array("MON", "TUE", "WED", "THU", "FRI");
+                      while ($i != 6) {
+                        $j = 1;
+                        $ctr = 0;
+                        $tt_result = mysqli_query($conn, genTtSql($reg_no, $i));
+                        echo "<tr>";
+                        echo "<th scope=\"row\" style=\"vertical-align: middle;\">{$days[$i - 1]}</th>";
+                        while ($tt_row = mysqli_fetch_assoc($tt_result)) {
+                          while ($tt_row['course_slot'] != $j) {
+                            echo "<td> </td>";
+                            $j++;
+                            $ctr++;
+                          }
+                          echo "<td>" . labCheck($tt_row['course_name']) . "</td>";
+                          $j++;
+                          $ctr++;
+                        }
+                        $i++;
+                        while($ctr != 10) {
+                          echo "<td> </td>";
+                          $ctr++;
+                        }
+                        echo "</tr>";
+                      }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -188,11 +254,11 @@ if (isset($_SESSION['regno'])) {
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script>
-    let on=false;
+    let on = false;
     let button = document.querySelector('#theme-btn')
     button.addEventListener('click', () => {
       on = !on;
-      if(on == true) {
+      if (on == true) {
         document.getElementById("banner").style.backgroundImage = "url(\"/img/home_banner_inv.png\")";
       } else {
         document.getElementById("banner").style.backgroundImage = "url(\"/img/home_banner.png\")";

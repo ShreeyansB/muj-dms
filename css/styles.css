@@ -76,3 +76,15 @@ button[aria-selected='false'] {
   font-weight: 400;
   color: rgba(0, 0, 0, 0.623);
 }
+
+.table-myaccent {
+  background-color: #4067b1;
+  border-color: #3d64ac;
+  color: white;
+  height: 5em;
+  vertical-align: middle;
+}
+
+.round-table {
+  border-radius: 0.7em;
+}
