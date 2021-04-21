@@ -97,3 +97,13 @@ button[aria-selected='false'] {
 .link-mycolor {
   color: #4067b1;
 }
+
+#jsPDF {
+  display: none;
+}
+
+@media screen and (min-width: 600px) {
+  #jsPDF {
+    display: block;
+  }
+}
