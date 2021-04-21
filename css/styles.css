@@ -47,6 +47,11 @@ li {
   background-color: #4067b1;
 }
 
+.theme-btn {
+  background-color: #4067b1;
+  color: white;
+}
+
 .feat-bg {
   color: #4067b1;
 }
@@ -87,4 +92,8 @@ button[aria-selected='false'] {
 
 .round-table {
   border-radius: 0.7em;
+}
+
+.link-mycolor {
+  color: #4067b1;
 }

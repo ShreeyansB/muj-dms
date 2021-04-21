@@ -16,13 +16,13 @@ function genTtSql($reg_no, $day) // To generate query based on Day
   return "SELECT timetable.*,course_name FROM student JOIN class ON (student.reg_no = $reg_no AND student.class_id = class.class_id) JOIN timetable ON (timetable.class_id = class.class_id AND timetable.course_day = $day) JOIN course ON timetable.course_id = course.course_id ORDER BY course_day,course_slot";
 }
 
-function labCheck($data) { // To add emoji if current class is a lab class
-  if(preg_match('/\bLab\b/', $data)) {
+function labCheck($data)
+{ // To add emoji if current class is a lab class
+  if (preg_match('/\bLab\b/', $data)) {
     $data .= " ";
     $data .= "💻";
     return $data;
-  }
-  else {
+  } else {
     return $data;
   }
 }
@@ -39,6 +39,12 @@ if (isset($_SESSION['regno'])) {
   $att_sql = "SELECT course.course_name,learning.num_attended,learning.num_classes,learning.attendance FROM learning JOIN course ON (learning.course_id = course.course_id AND learning.reg_no = $reg_no) ORDER BY course_name";
 
   $tt_sql = "SELECT timetable.* FROM student JOIN class ON (student.reg_no = $reg_no AND student.class_id = class.class_id) JOIN timetable ON timetable.class_id = class.class_id JOIN course ON timetable.course_id = course.course_id ORDER BY course_day,course_slot";
+
+  $course_sql = "SELECT learning.course_id, course.course_name, course.course_credits, teacher.first_name,teacher.last_name, teacher.email FROM student JOIN class ON (reg_no = $reg_no AND student.class_id = class.class_id) JOIN learning ON (student.reg_no = learning.reg_no) JOIN course ON (learning.course_id = course.course_id) JOIN teaches ON (teaches.class_id = student.class_id AND learning.course_id = teaches.course_id) JOIN teacher ON (teaches.teacher_id = teacher.teacher_id) ORDER BY course_id";
+
+  $grade_sql = "SELECT learning.course_id, course.course_name, course.course_credits, learning.grade FROM student JOIN class ON (reg_no = $reg_no AND student.class_id = class.class_id) JOIN learning ON (student.reg_no = learning.reg_no) JOIN course ON (learning.course_id = course.course_id) ORDER BY course_id";
+
+  $gpa_sql = "SELECT gpa.sem,gpa.gpa FROM student JOIN gpa ON (student.reg_no = $reg_no AND student.reg_no = gpa.reg_no) ORDER BY gpa.sem";
 } else {
   header("Location: index.php?");
   exit();
@@ -58,6 +64,10 @@ if (isset($_SESSION['regno'])) {
 
   <link rel="stylesheet" href="css/all.css">
   <script defer src="js/all.js"></script>
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -157,7 +167,9 @@ if (isset($_SESSION['regno'])) {
             <div class="tab-pane fade show active mt-3" id="attendance" role="tabpanel" aria-labelledby="attendance-tab">
               <div class="container">
                 <div class="table-responsive">
-                  <table class="table table-hover">
+                  <table class="table table-hover" id="attendance-table">
+                    <caption class="invisible" id="attendance-table-cap"><?php date_default_timezone_set('Asia/Kolkata');
+                                                                          echo date('d/m/Y h:i:s a', time()); ?></caption>
                     <thead>
                       <th scope="col">#</th>
                       <th scope="col">Course Name</th>
@@ -183,58 +195,151 @@ if (isset($_SESSION['regno'])) {
                     </tbody>
                   </table>
                 </div>
+                <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="jsPDF" onclick="dlAsPDF('attendance-table')">Download as PDF</button>
               </div>
             </div>
             <div class="tab-pane fade" id="timetable" role="tabpanel" aria-labelledby="timetable-tab">
-              <div class="container">
-                <div class="table-responsive round-table">
-                  <table class="table table-bordered table-striped">
-                    <thead>
-                      <tr class="table-myaccent">
-                        <th scope="col" style="width: 6%">Day/Time</th>
-                        <th scope="col" style="width: 8.8%">09:00-09:45</th>
-                        <th scope="col" style="width: 8.8%">09:55-10:40</th>
-                        <th scope="col" style="width: 8.8%">10:50-11:35</th>
-                        <th scope="col" style="width: 8.8%">11:45-12:30</th>
-                        <th scope="col" style="width: 8.8%">12:40-01:25</th>
-                        <th scope="col" style="width: 8.8%">01:35-02:20</th>
-                        <th scope="col" style="width: 8.8%">02:30-03:15</th>
-                        <th scope="col" style="width: 8.8%">03:25-04:10</th>
-                        <th scope="col" style="width: 8.8%">04:20-05:05</th>
-                        <th scope="col" style="width: 8.8%">05:15-06:00</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                      $i = 1;
-                      $days = array("MON", "TUE", "WED", "THU", "FRI");
-                      while ($i != 6) {
-                        $j = 1;
-                        $ctr = 0;
-                        $tt_result = mysqli_query($conn, genTtSql($reg_no, $i));
-                        echo "<tr>";
-                        echo "<th scope=\"row\" style=\"vertical-align: middle;\">{$days[$i - 1]}</th>";
-                        while ($tt_row = mysqli_fetch_assoc($tt_result)) {
-                          while ($tt_row['course_slot'] != $j) {
-                            echo "<td> </td>";
-                            $j++;
-                            $ctr++;
-                          }
-                          echo "<td>" . labCheck($tt_row['course_name']) . "</td>";
+
+              <div class="table-responsive round-table">
+                <table class="table table-bordered table-striped" id="timetable-table">
+                  <caption class="invisible" id="timetable-table-cap"><?php date_default_timezone_set('Asia/Kolkata');
+                                                                      echo date('d/m/Y h:i:s a', time()); ?></caption>
+                  <thead>
+                    <tr class="table-myaccent text-nowrap">
+                      <th scope="col">Day/Time</th>
+                      <th scope="col">09:00-09:45</th>
+                      <th scope="col">09:55-10:40</th>
+                      <th scope="col">10:50-11:35</th>
+                      <th scope="col">11:45-12:30</th>
+                      <th scope="col">12:40-01:25</th>
+                      <th scope="col">01:35-02:20</th>
+                      <th scope="col">02:30-03:15</th>
+                      <th scope="col">03:25-04:10</th>
+                      <th scope="col">04:20-05:05</th>
+                      <th scope="col">05:15-06:00</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                    $i = 1;
+                    $days = array("MON", "TUE", "WED", "THU", "FRI");
+                    while ($i != 6) {
+                      $j = 1;
+                      $ctr = 0;
+                      $tt_result = mysqli_query($conn, genTtSql($reg_no, $i));
+                      echo "<tr>";
+                      echo "<th scope=\"row\" style=\"vertical-align: middle;\">{$days[$i - 1]}</th>";
+                      while ($tt_row = mysqli_fetch_assoc($tt_result)) {
+                        while ($tt_row['course_slot'] != $j) {
+                          echo "<td> </td>";
                           $j++;
                           $ctr++;
                         }
-                        $i++;
-                        while($ctr != 10) {
-                          echo "<td> </td>";
-                          $ctr++;
-                        }
-                        echo "</tr>";
+                        echo "<td>" . labCheck($tt_row['course_name']) . "</td>";
+                        $j++;
+                        $ctr++;
                       }
-                      ?>
-                    </tbody>
-                  </table>
+                      $i++;
+                      while ($ctr != 10) {
+                        echo "<td> </td>";
+                        $ctr++;
+                      }
+                      echo "</tr>";
+                    }
+                    ?>
+                  </tbody>
+                </table>
+                <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="jsPDF" onclick="dlAsPDF('timetable-table')">Download as PDF</button>
+              </div>
+            </div>
+            <div class="tab-pane fade mt-3" id="courses" role="tabpanel" aria-labelledby="courses-tab">
+              <div class="table-responsive">
+                <table class="table table-hover" id="courses-table">
+                  <caption class="invisible" id="courses-table-cap"><?php date_default_timezone_set('Asia/Kolkata');
+                                                                    echo date('d/m/Y h:i:s a', time()); ?></caption>
+                  <thead>
+                    <th scope="col">#</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Credits</th>
+                    <th scope="col">Teacher</th>
+                    <th scope="col">EMail</th>
+                  </thead>
+                  <tbody>
+                    <?php
+                    $i = 0;
+                    $course_result = mysqli_query($conn, $course_sql);
+                    while ($course_row = mysqli_fetch_assoc($course_result)) {
+                      $i++;
+                      echo "<tr>";
+                      echo "<th scope=\"row\">{$i}</th>";
+                      echo "<td>{$course_row["course_id"]}</td>";
+                      echo "<td>{$course_row["course_name"]}</td>";
+                      echo "<td>{$course_row["course_credits"]}</td>";
+                      echo "<td>{$course_row["first_name"]} {$course_row["last_name"]}</td>";
+                      echo "<td> <a class=\"link-mycolor\" href=\"mailto:{$course_row["email"]}\">{$course_row["email"]}</a></td>";
+                      echo "</tr>";
+                    }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+              <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="jsPDF" onclick="dlAsPDF('courses-table')">Download as PDF</button>
+            </div>
+            <div class="tab-pane fade mt-3" id="grades" role="tabpanel" aria-labelledby="grades-tab">
+              <div class="container">
+                <div class="container" id="grades-table">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead>
+                        <th scope="col">#</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Credits</th>
+                        <th scope="col">Grade</th>
+                      </thead>
+                      <tbody>
+                        <?php
+                        $i = 0;
+                        $grade_result = mysqli_query($conn, $grade_sql);
+                        while ($grade_row = mysqli_fetch_assoc($grade_result)) {
+                          $i++;
+                          echo "<tr>";
+                          echo "<th scope=\"row\">{$i}</th>";
+                          echo "<td>{$grade_row["course_id"]}</td>";
+                          echo "<td>{$grade_row["course_name"]}</td>";
+                          echo "<td>{$grade_row["course_credits"]}</td>";
+                          echo "<td scope=\"row\">" . convNull($grade_row["grade"]) . "</td>";
+                          echo "</tr>";
+                        }
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>
+                  <br>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <caption class="invisible" id="grades-table-cap"><?php date_default_timezone_set('Asia/Kolkata');
+                                                                        echo date('d/m/Y h:i:s a', time()); ?></caption>
+                      <thead>
+                        <th scope="col">Semester</th>
+                        <th scope="col">GPA</th>
+                      </thead>
+                      <tbody>
+                        <?php
+                        $gpa_result = mysqli_query($conn, $gpa_sql);
+                        while ($gpa_row = mysqli_fetch_assoc($gpa_result)) {
+                          echo "<tr>";
+                          echo "<td>{$gpa_row["sem"]}</td>";
+                          echo "<td>{$gpa_row["gpa"]}</td>";
+                          echo "</tr>";
+                        }
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+                <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="jsPDF" onclick="dlAsPDF('grades-table')">Download as PDF</button>
               </div>
             </div>
           </div>
@@ -254,6 +359,34 @@ if (isset($_SESSION['regno'])) {
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script>
+    function dlAsPDF(id) { // to download table as pdf
+      str = '#';
+      temp = id.concat('-cap');
+      id = str.concat(id);
+      console.log(temp);
+      document.getElementById(temp).classList.remove("invisible");
+      console.log(document.getElementById(temp));
+      html2canvas($(id)[0], {
+        onrendered: function(canvas) {
+          var data = canvas.toDataURL();
+          var docDefinition = {
+            pageSize: 'A4',
+            pageOrientation: 'landscape',
+            content: [{
+              image: data,
+              width: 750,
+            }]
+          };
+          pdfMake.createPdf(docDefinition).download("cutomer-details.pdf");
+        }
+      });
+      setTimeout(() => {
+        document.getElementById(temp).classList.add("invisible");
+      }, 2000);
+      // document.getElementById(temp).classList.add("invisible");
+      console.log(document.getElementById(temp));
+    }
+
     let on = false;
     let button = document.querySelector('#theme-btn')
     button.addEventListener('click', () => {
