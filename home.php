@@ -358,33 +358,24 @@ if (isset($_SESSION['regno'])) {
     </div>
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
+
   <script>
-    function dlAsPDF(id) { // to download table as pdf
-      str = '#';
-      temp = id.concat('-cap');
-      id = str.concat(id);
-      console.log(temp);
-      document.getElementById(temp).classList.remove("invisible");
-      console.log(document.getElementById(temp));
-      html2canvas($(id)[0], {
-        onrendered: function(canvas) {
-          var data = canvas.toDataURL();
-          var docDefinition = {
-            pageSize: 'A4',
-            pageOrientation: 'landscape',
-            content: [{
-              image: data,
-              width: 750,
-            }]
-          };
-          pdfMake.createPdf(docDefinition).download("cutomer-details.pdf");
-        }
-      });
-      setTimeout(() => {
-        document.getElementById(temp).classList.add("invisible");
-      }, 2000);
-      // document.getElementById(temp).classList.add("invisible");
-      console.log(document.getElementById(temp));
+
+    function dlAsPDF(id) {
+      let table = document.getElementById(id).parentNode;
+      var win = window.open('', '', 'height=720,width=1200');
+      win.document.write('<html><head>');
+      win.document.write('<link rel="stylesheet" href="css/bootstrap.min.css">');
+      win.document.write('<link rel="stylesheet" href="css/styles.css">');
+      win.document.write('<link rel="stylesheet" href="css/all.css">');
+      win.document.write('</head>');
+      win.document.write('<body>');
+      win.document.write(table.innerHTML);
+      win.document.write('</body></html>');
+      win.document.getElementById(id.concat('-cap')).classList.remove("invisible");
+      win.document.getElementById('jsPDF').remove();
+      win.document.close();
+      win.print();
     }
 
     let on = false;
