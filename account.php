@@ -102,6 +102,15 @@ if (isset($_SESSION['regno'])) {
             <input type="email" class="form-control" name="email" id="email-input" placeholder="<?php echo 'bahadkar.199302019@muj.manipal.edu' ?>">
           </div>
         </div>
+        <div class="col col-12 mb-4">
+          <label for="pass-input" class="form-label my-label fs-5" id="pass-label">Password</label>
+          <input type="password" class="form-control mb-2" name="pass" id="pass-input" placeholder="Old Password">
+          <input type="password" class="form-control mb-2" name="npass" id="npass-input" placeholder="New Password">
+          <input type="password" class="form-control mb-2" name="cpass" id="cpass-input" placeholder="Confirm Password">
+        </div>
+        <div class="col col-12 mb-4">
+          <button type="submit" class="btn btn-primary theme-btn px-4 float-end">Submit</button>
+        </div>
       </div>
     </form>
   </div>
