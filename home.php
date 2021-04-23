@@ -63,6 +63,7 @@ if (isset($_SESSION['regno'])) {
   <link rel="stylesheet" href="css/styles.css">
 
   <link rel="stylesheet" href="css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <script defer src="js/all.js"></script>
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -94,7 +95,7 @@ if (isset($_SESSION['regno'])) {
             <a href="php/logout.php" class="nav-link text-dark">Logout</a>
           </li>
           <li class="nav-item ms-1">
-            <button type="button" class="btn btn-primary" data-bs-toggle="button" autocomplete="off" id="theme-btn">🌗</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="button" autocomplete="off" id="theme-btn"><div class="flip-icon">🌗</div></button>
           </li>
         </ul>
       </div>
@@ -107,12 +108,12 @@ if (isset($_SESSION['regno'])) {
       <div class="row">
         <div class="col-2 col-md-1 col-lg-2 col-xl-3"></div>
         <div class="col-8 col-md-10 col-lg-8 col-xl-6 my-2" align="center">
-          <div class="card my-5 text-start border border-0 shadow-lg">
+          <div class="card my-5 text-start border border-0 shadow-lg my-card animate__animated animate__jackInTheBox">
             <div class="row g-0 p-0">
               <div class="col-12 col-md-4 pt-4 pt-md-0 d-flex justify-content-center justify-content-md-start">
                 <img src="/img/avatar.png" alt="..." class="img-fluid rounded-start inverted">
               </div>
-              <div class="col-12 col-md-8 ps-2 ps-md-0 pt-2">
+              <div class="col-12 col-md-8 ps-2 ps-md-0 pt-2 animate__animated animate__lightSpeedInRight">
                 <div class="card-body ps-md-2">
                   <text class="id-heading m-0">NAME</text>
                   <h5 class="card-title mb-2 mb-2"><?php echo "{$info_row['first_name']} {$info_row['last_name']}" ?></h5>
@@ -358,7 +359,6 @@ if (isset($_SESSION['regno'])) {
   <script src="js/bootstrap.bundle.min.js"></script>
 
   <script>
-
     function dlAsPDF(id) {
       let table = document.getElementById(id).parentNode;
       var win = window.open('', '', 'height=720,width=1200');
@@ -376,18 +376,38 @@ if (isset($_SESSION['regno'])) {
       win.print();
     }
 
+    const animateCSS = (element, animation, prefix = 'animate__') =>
+      new Promise((resolve, reject) => {
+        const animationName = `${prefix}${animation}`;
+        const node = document.querySelector(element);
+
+        node.classList.add(`${prefix}animated`, animationName, 'animate__faster');
+
+        function handleAnimationEnd(event) {
+          event.stopPropagation();
+          node.classList.remove(`${prefix}animated`, animationName, 'animate__faster');
+          resolve('Animation ended');
+        }
+
+        node.addEventListener('animationend', handleAnimationEnd, {
+          once: true
+        });
+      });
+
     let on = false;
-    let button = document.querySelector('#theme-btn')
+    let button = document.querySelector('#theme-btn');
     button.addEventListener('click', () => {
+      animateCSS('.flip-icon','flip');
       on = !on;
       if (on == true) {
         document.getElementById("banner").style.backgroundImage = "url(\"/img/home_banner_inv.png\")";
       } else {
         document.getElementById("banner").style.backgroundImage = "url(\"/img/home_banner.png\")";
       }
-      document.documentElement.classList.toggle('dark-mode')
-      document.documentElement.classList.toggle('inverted')
-    })
+      document.documentElement.classList.toggle('dark-mode');
+      document.documentElement.classList.toggle('inverted');
+      
+    });
   </script>
 </body>
 

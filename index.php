@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/styles.css">
 
   <link rel="stylesheet" href="css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
   <script defer src="js/all.js"></script>
 
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -36,7 +37,9 @@
             <a href="https://jaipur.manipal.edu/muj/contact-us.html" class="nav-link">Help</a>
           </li>
           <li class="nav-item ms-1">
-            <button type="button" class="btn btn-primary" data-bs-toggle="button" autocomplete="off" id="theme-btn">🌗</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="button" autocomplete="off" id="theme-btn">
+              <div class="flip-icon">🌗</div>
+            </button>
           </li>
         </ul>
       </div>
@@ -47,20 +50,19 @@
 
   <div class="container mt-2">
     <div class="row mb-5">
-      <div class="col-12 col-lg-6 mb-5 mb-lg-3">
+      <div class="col-12 col-lg-6 mb-5 mb-lg-3 animate__animated animate__bounceInLeft">
         <img class="img-fluid selectDisable" alt="DMS Image" draggable="false" src="img/dms-illus.svg">
       </div>
-      <div class="col-12 col-lg-6 align-self-center">
+      <div class="col-12 col-lg-6 align-self-center animate__animated animate__bounceInRight">
         <div class="container p-3 border rounded-3">
           <!-- LOGIN FORM -->
           <form action="php/login.php" method="POST">
             <div class="row">
               <div class="col-auto pe-0">
-                <legend class="mb-3 h3" id="legend-text">LOGIN</legend> 
+                <legend class="mb-3 h3" id="legend-text">LOGIN</legend>
               </div>
               <div class="col-auto ps-2">
-                <button type="button" class="btn btn-help p-0 fs-5" data-bs-toggle="popover" data-bs-animation="true" 
-                tabindex="0" title="Login details" data-bs-content="<u class='fs-6'>Following users are registered :</u><br />• Registration Number: <span class='font-monospace'>199302019</span><br />&nbsp &nbsp Password: <span class='font-monospace'>password</span><br />• Registration Number: <span class='font-monospace'>199303069</span><br />&nbsp &nbsp Password: <span class='font-monospace'>password</span>" data-bs-html="true">?</button>
+                <button type="button" class="btn btn-help p-0 fs-5" data-bs-toggle="popover" data-bs-animation="true" tabindex="0" title="Login details" data-bs-content="<u class='fs-6'>Following users are registered :</u><br />• Registration Number: <span class='font-monospace'>199302019</span><br />&nbsp &nbsp Password: <span class='font-monospace'>password</span><br />• Registration Number: <span class='font-monospace'>199303069</span><br />&nbsp &nbsp Password: <span class='font-monospace'>password</span>" data-bs-html="true">?</button>
               </div>
             </div>
             <div class="mb-3">
@@ -99,7 +101,7 @@
   <!-- Features -->
   <div class="container px-5 my-5">
     <div class="row px-5 justify-content-around">
-      <div class="col-12 col-md-4 mb-4 mb-md-0 text-center">
+      <div class="col-12 col-md-4 mb-4 mb-md-0 text-center animate_animated animate__bounceIn">
         <div class="fa-layers fa-fw fa-8x mb-4">
           <i class="fas fa-circle feat-bg"></i>
           <i class="fas fa-database text-white" data-fa-transform="shrink-10"></i>
@@ -110,7 +112,7 @@
           </blockquote>
         </figure>
       </div>
-      <div class="col-12 col-md-4 mb-4 mb-md-0 text-center">
+      <div class="col-12 col-md-4 mb-4 mb-md-0 text-center animate_animated animate__bounceIn">
         <div class="fa-layers fa-fw fa-8x mb-4">
           <i class="fas fa-circle feat-bg"></i>
           <i class="fas fa-hand-paper text-white pe-1" data-fa-transform="shrink-10"></i>
@@ -121,7 +123,7 @@
           </blockquote>
         </figure>
       </div>
-      <div class="col-12 col-md-4 mb-4 mb-md-0 text-center">
+      <div class="col-12 col-md-4 mb-4 mb-md-0 text-center animate_animated animate__bounceIn">
         <div class="fa-layers fa-fw fa-8x mb-4">
           <i class="fas fa-circle feat-bg"></i>
           <i class="fas fa-table text-white" data-fa-transform="shrink-10"></i>
@@ -145,12 +147,31 @@
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script>
+    const animateCSS = (element, animation, prefix = 'animate__') =>
+      new Promise((resolve, reject) => {
+        const animationName = `${prefix}${animation}`;
+        const node = document.querySelector(element);
+
+        node.classList.add(`${prefix}animated`, animationName, 'animate__faster');
+
+        function handleAnimationEnd(event) {
+          event.stopPropagation();
+          node.classList.remove(`${prefix}animated`, animationName, 'animate__faster');
+          resolve('Animation ended');
+        }
+
+        node.addEventListener('animationend', handleAnimationEnd, {
+          once: true
+        });
+      });
+
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
     var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
       return new bootstrap.Popover(popoverTriggerEl)
     })
     let button = document.querySelector('#theme-btn')
     button.addEventListener('click', () => {
+      animateCSS('.flip-icon', 'flip');
       document.documentElement.classList.toggle('dark-mode')
       document.documentElement.classList.toggle('inverted')
     })
