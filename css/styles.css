@@ -97,3 +97,16 @@ button[aria-selected='false'] {
 .link-mycolor {
   color: #4067b1;
 }
+
+.btn-help {
+  background-color: transparent;
+  color: rgba(29, 35, 63, 0.253);
+  padding: none;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.btn-help:active, .btn-help:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}

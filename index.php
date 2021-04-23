@@ -54,7 +54,15 @@
         <div class="container p-3 border rounded-3">
           <!-- LOGIN FORM -->
           <form action="php/login.php" method="POST">
-            <legend class="mb-3 h3" id="legend-text">LOGIN</legend>
+            <div class="row">
+              <div class="col-auto pe-0">
+                <legend class="mb-3 h3" id="legend-text">LOGIN</legend> 
+              </div>
+              <div class="col-auto ps-2">
+                <button type="button" class="btn btn-help p-0 fs-5" data-bs-toggle="popover" data-bs-animation="true" 
+                tabindex="0" title="Login details" data-bs-content="<u class='fs-6'>Following users are registered :</u><br />• Registration Number: <span class='font-monospace'>199302019</span><br />&nbsp &nbsp Password: <span class='font-monospace'>password</span><br />• Registration Number: <span class='font-monospace'>199303069</span><br />&nbsp &nbsp Password: <span class='font-monospace'>password</span>" data-bs-html="true">?</button>
+              </div>
+            </div>
             <div class="mb-3">
               <label for="inputRegNo" class="form-label">Registration Number</label>
               <input type="text" class="form-control" placeholder="Reg No" id="inputRegNo" name="regno">
@@ -137,6 +145,10 @@
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script>
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+      return new bootstrap.Popover(popoverTriggerEl)
+    })
     let button = document.querySelector('#theme-btn')
     button.addEventListener('click', () => {
       document.documentElement.classList.toggle('dark-mode')
