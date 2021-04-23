@@ -92,6 +92,9 @@ if (isset($_SESSION['regno'])) {
             <a href="https://jaipur.manipal.edu/muj/contact-us.html" class="nav-link text-black-50">Help</a>
           </li>
           <li class="nav-item">
+            <a href="account.php" class="nav-link text-black-50">Account</a>
+          </li>
+          <li class="nav-item">
             <a href="php/logout.php" class="nav-link text-dark">Logout</a>
           </li>
           <li class="nav-item ms-1">

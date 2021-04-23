@@ -61,6 +61,12 @@ li {
   opacity: 0.07;
 }
 
+.divider-theme {
+  border: none;
+  color: rgba(26, 37, 70, 0.281);
+  height: 0.2em !important;
+}
+
 #banner {
   background-image: url("/img/home_banner.png");
   background-size: cover;
@@ -91,7 +97,7 @@ button[aria-selected='false'] {
 }
 
 .round-table {
-  border-radius: 0.7em;
+  border-radius: 0.2em;
 }
 
 .link-mycolor {
@@ -111,58 +117,15 @@ button[aria-selected='false'] {
   box-shadow: none !important;
 }
 
-.my-carde {
-  -webkit-animation: fadein 500ms ease-in-out;
-  /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 500ms ease-in-out;
-  /* Firefox < 16 */
-  -ms-animation: fadein 500ms ease-in-out;
-  /* Internet Explorer */
-  -o-animation: fadein 500ms ease-in-out;
-  /* Opera < 12.1 */
-  animation: fadein 500ms ease-in-out;
-  animation-fill-mode: forwards;
-  -webkit-transform: scale(0,0);
-  -moz-transform: scale(0,0);
-  -ms-transform: scale(0,0);
-  -o-transform: scale(0,0);
-  transform: scale(0,0);
+.pop-cap {
+  font-size: 0.95rem;
+  font-weight: 400;
 }
 
-@keyframes fadein {
-  100% {
-    transform: scale(1,1);
-  }
-}
+.my-label {
+  -webkit-text-decoration-style: wavy;
+  -moz-text-decoration-style: wavy;
+  text-decoration-style: wavy;
+  text-decoration-color: red;
 
-/* Firefox < 16 */
-
-@-moz-keyframes fadein {
-  100% {
-    transform: scale(1,1);
-  }
-}
-
-/* Safari, Chrome and Opera > 12.1 */
-
-@-webkit-keyframes fadein {
-  100% {
-    transform: scale(1,1);
-  }
-}
-
-/* Internet Explorer */
-
-@-ms-keyframes fadein {
-  100% {
-    transform: scale(1,1);
-  }
-}
-
-/* Opera < 12.1 */
-
-@-o-keyframes fadein {
-  100% {
-    transform: scale(1,1);
-  }
 }

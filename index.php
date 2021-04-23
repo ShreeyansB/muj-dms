@@ -62,7 +62,7 @@
                 <legend class="mb-3 h3" id="legend-text">LOGIN</legend>
               </div>
               <div class="col-auto ps-2">
-                <button type="button" class="btn btn-help p-0 fs-5" data-bs-toggle="popover" data-bs-animation="true" tabindex="0" title="Login details" data-bs-content="<u class='fs-6'>Following users are registered :</u><br />• Registration Number: <span class='font-monospace'>199302019</span><br />&nbsp &nbsp Password: <span class='font-monospace'>password</span><br />• Registration Number: <span class='font-monospace'>199303069</span><br />&nbsp &nbsp Password: <span class='font-monospace'>password</span>" data-bs-html="true">?</button>
+                <button type="button" class="btn btn-help p-0 fs-5" data-bs-toggle="popover" data-bs-animation="true" tabindex="0" title="Login details" data-bs-content="<u class='pop-cap'>Following users are registered :</u><br />• Registration Number: <span class='font-monospace'>199302019</span><br />&nbsp  Password: <span class='font-monospace'>password</span><br />• Registration Number: <span class='font-monospace'>199303069</span><br />&nbsp  Password: <span class='font-monospace'>password</span>" data-bs-html="true">?</button>
               </div>
             </div>
             <div class="mb-3">
