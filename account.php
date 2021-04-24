@@ -14,6 +14,11 @@ function convNull($data) // To replace NULL value with "-"
 
 if (isset($_SESSION['regno'])) {
   $reg_no = $_SESSION['regno'];
+  $name_sql = "SELECT first_name, last_name FROM student WHERE reg_no=$reg_no";
+  $name_result = mysqli_query($conn, $name_sql);
+  $name_row = mysqli_fetch_assoc($name_result);
+  $fname = $name_row['first_name'];
+  $lname = $name_row['last_name'];
 } else {
   header("Location: index.php?");
   exit();
@@ -154,16 +159,16 @@ if (isset($_SESSION['regno'])) {
             <label for="fname-input" class="form-label my-label fs-5" id="name-label">Name</label>
             <div class="input-group">
               <span class="input-group-text" id="before">First</span>
-              <input type="text" class="form-control" name="fname" id="fname-input" placeholder="<?php echo 'Shreeyans' ?>">
+              <input type="text" class="form-control" name="fname" id="fname-input" placeholder="<?php echo $fname ?>">
               <span class="input-group-text">Last</span>
-              <input type="text" class="form-control" name="lname" id="lname-input" placeholder="<?php echo 'Bahadkar' ?>">
+              <input type="text" class="form-control" name="lname" id="lname-input" placeholder="<?php echo $lname ?>">
             </div>
           </fieldset>
         </div>
         <div class="col col-12 mb-4">
           <label for="email-input" class="form-label my-label fs-5" id="email-label">Email</label>
           <div class="input-group">
-            <input type="email" class="form-control" name="email" id="email-input" placeholder="<?php echo 'bahadkar.199302019@muj.manipal.edu' ?>">
+            <input type="email" class="form-control" name="email" id="email-input" placeholder="<?php echo $_SESSION['email']; ?>">
           </div>
         </div>
         <div class="col col-12 mb-4">
