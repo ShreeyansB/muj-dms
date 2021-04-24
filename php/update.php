@@ -45,7 +45,7 @@ if (isset($_SESSION['regno'])) {
       if (mysqli_num_rows($pass_check_result) === 1) {
         $pass_change_sql = "UPDATE student SET password = '$np' WHERE reg_no=$regno";
         $pass_change_result = mysqli_query($conn, $pass_change_sql);
-        $par = $par . "ps=done&";
+        $par = $par . "ps=don&";
       } else {
         $par = $par . "ps=wro&";
       }

@@ -85,6 +85,37 @@ if (isset($_SESSION['regno'])) {
       <hr class="divider-theme mt-4">
 
       <div class="row pe-5">
+          <?php if (isset($_GET['es']) && ($_GET['es'] == "don")) { ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              <strong>Success!</strong> You have changed your <u>email</u>.
+            </div>
+          <?php } ?>
+          <?php if (isset($_GET['es']) && ($_GET['es'] == "wro")) { ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              <strong>Alert!</strong> Entered email is <u>already registered</u> to another user.
+            </div>
+          <?php } ?>
+          <?php if (isset($_GET['ps']) && ($_GET['ps'] == "don")) { ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              <strong>Success!</strong> You have changed your <u>password</u>.
+            </div>
+          <?php } ?>
+          <?php if (isset($_GET['ps']) && ($_GET['ps'] == "wro")) { ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              <strong>Alert!</strong> Entered password <u>does not match</u> current password.
+            </div>
+          <?php } ?>
+          <?php if (isset($_GET['ps']) && ($_GET['ps'] == "dif")) { ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              <strong>Alert!</strong> Entered passwords <u>do not match</u>  password.
+            </div>
+          <?php } ?>
+
         <div class="col col-12 mb-4">
           <fieldset disabled="disabled">
             <label for="fname-input" class="form-label my-label fs-5" id="name-label">Name</label>
