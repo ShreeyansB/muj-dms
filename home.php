@@ -45,6 +45,10 @@ if (isset($_SESSION['regno'])) {
   $grade_sql = "SELECT learning.course_id, course.course_name, course.course_credits, learning.grade FROM student JOIN class ON (reg_no = $reg_no AND student.class_id = class.class_id) JOIN learning ON (student.reg_no = learning.reg_no) JOIN course ON (learning.course_id = course.course_id) ORDER BY course_id";
 
   $gpa_sql = "SELECT gpa.sem,gpa.gpa FROM student JOIN gpa ON (student.reg_no = $reg_no AND student.reg_no = gpa.reg_no) ORDER BY gpa.sem";
+
+  $img_ret_sql = "SELECT picture FROM student WHERE reg_no = $reg_no";
+  $img_ret_res = mysqli_query($conn, $img_ret_sql);
+  $img_ret_row = mysqli_fetch_assoc($img_ret_res);
 } else {
   header("Location: index.php?");
   exit();
@@ -98,7 +102,9 @@ if (isset($_SESSION['regno'])) {
             <a href="php/logout.php" class="nav-link text-dark">Logout</a>
           </li>
           <li class="nav-item ms-1">
-            <button type="button" class="btn btn-primary" data-bs-toggle="button" autocomplete="off" id="theme-btn"><div class="flip-icon">🌗</div></button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="button" autocomplete="off" id="theme-btn">
+              <div class="flip-icon">🌗</div>
+            </button>
           </li>
         </ul>
       </div>
@@ -114,9 +120,15 @@ if (isset($_SESSION['regno'])) {
           <div class="card my-5 text-start border border-0 shadow-lg my-card animate__animated animate__jackInTheBox">
             <div class="row g-0 p-0">
               <div class="col-12 col-md-4 pt-4 pt-md-0 d-flex justify-content-center justify-content-md-start">
-                <img src="/img/avatar.png" alt="..." class="img-fluid rounded-start inverted">
+                <?php
+                if ($img_ret_row['picture'] != NULL) {
+                  echo '<img src=data:image;base64,' . $img_ret_row['picture'] . ' alt="..." class="img-fluid rounded-start inverted">';
+                } else {
+                  echo '<img src="/img/avatar.png" alt="..." class="img-fluid rounded-start inverted">';
+                }
+                ?>
               </div>
-              <div class="col-12 col-md-8 ps-2 ps-md-0 pt-2 animate__animated animate__lightSpeedInRight">
+              <div class="col-12 col-md-8 ps-3 pt-2 animate__animated animate__lightSpeedInRight">
                 <div class="card-body ps-md-2">
                   <text class="id-heading m-0">NAME</text>
                   <h5 class="card-title mb-2 mb-2"><?php echo "{$info_row['first_name']} {$info_row['last_name']}" ?></h5>
@@ -400,7 +412,7 @@ if (isset($_SESSION['regno'])) {
     let on = false;
     let button = document.querySelector('#theme-btn');
     button.addEventListener('click', () => {
-      animateCSS('.flip-icon','flip');
+      animateCSS('.flip-icon', 'flip');
       on = !on;
       if (on == true) {
         document.getElementById("banner").style.backgroundImage = "url(\"/img/home_banner_inv.png\")";
@@ -409,7 +421,7 @@ if (isset($_SESSION['regno'])) {
       }
       document.documentElement.classList.toggle('dark-mode');
       document.documentElement.classList.toggle('inverted');
-      
+
     });
   </script>
 </body>

@@ -79,7 +79,7 @@ if (isset($_SESSION['regno'])) {
   <!-- Form -->
   <div class="container mt-4">
     <form action="php/update.php" method="POST" enctype="multipart/form-data">
-      <div class = "animate__animated animate__fadeIn animate__fast">
+      <div class="animate__animated animate__fadeIn animate__fast">
         <h1>Manage Account</h1>
         <h2 class="text-muted">Enter updated details if you wish to change them</h2>
       </div>
@@ -122,6 +122,12 @@ if (isset($_SESSION['regno'])) {
           <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-success alert-dismissible fade show" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Success!</strong> You have changed your <u>profile picture</u>.
+          </div>
+        <?php } ?>
+        <?php if (isset($_GET['is']) && ($_GET['is'] == "rem")) { ?>
+          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-success alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong>Success!</strong> You have removed your <u>profile picture</u>.
           </div>
         <?php } ?>
         <?php if (isset($_GET['is']) && ($_GET['is'] == "err")) { ?>
@@ -170,7 +176,8 @@ if (isset($_SESSION['regno'])) {
           <label for="img-input" class="form-label my-label fs-5 m-0" id="img-label">Profile Picture</label>
           <p><span class="small text-muted">Supported file type is .jpg and max size is 2MB</span></p>
           <div class="input-group">
-          <input type="file" class="form-control" id="img-input" name="img">
+            <input type="file" class="form-control" id="img-input" name="img">
+            <input type="submit" class="btn btn-secondary" value="Remove Picture" data-bs-toggle="tooltip" title="Delete your picture from the server" data-bs-placement="top" name="remove_pic">
           </div>
         </div>
         <div class="col col-12 mb-4">
@@ -192,23 +199,6 @@ if (isset($_SESSION['regno'])) {
   <script src="js/bootstrap.bundle.min.js"></script>
 
   <script>
-    function dlAsPDF(id) {
-      let table = document.getElementById(id).parentNode;
-      var win = window.open('', '', 'height=720,width=1200');
-      win.document.write('<html><head>');
-      win.document.write('<link rel="stylesheet" href="css/bootstrap.min.css">');
-      win.document.write('<link rel="stylesheet" href="css/styles.css">');
-      win.document.write('<link rel="stylesheet" href="css/all.css">');
-      win.document.write('</head>');
-      win.document.write('<body>');
-      win.document.write(table.innerHTML);
-      win.document.write('</body></html>');
-      win.document.getElementById(id.concat('-cap')).classList.remove("invisible");
-      win.document.getElementById('jsPDF').remove();
-      win.document.close();
-      win.print();
-    }
-
     const animateCSS = (element, animation, prefix = 'animate__') =>
       new Promise((resolve, reject) => {
         const animationName = `${prefix}${animation}`;
@@ -226,6 +216,11 @@ if (isset($_SESSION['regno'])) {
           once: true
         });
       });
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
 
     let button = document.querySelector('#theme-btn');
     button.addEventListener('click', () => {
