@@ -78,7 +78,7 @@ if (isset($_SESSION['regno'])) {
 
   <!-- Form -->
   <div class="container mt-4">
-    <form action="php/update.php" method="POST">
+    <form action="php/update.php" method="POST" enctype="multipart/form-data">
       <div class = "animate__animated animate__fadeIn animate__fast">
         <h1>Manage Account</h1>
         <h2 class="text-muted">Enter updated details if you wish to change them</h2>
@@ -118,6 +118,30 @@ if (isset($_SESSION['regno'])) {
             <strong>Alert!</strong> Entered passwords <u>do not match</u> password.
           </div>
         <?php } ?>
+        <?php if (isset($_GET['is']) && ($_GET['is'] == "don")) { ?>
+          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-success alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong>Success!</strong> You have changed your <u>profile picture</u>.
+          </div>
+        <?php } ?>
+        <?php if (isset($_GET['is']) && ($_GET['is'] == "err")) { ?>
+          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong>Error!</strong> There was a problem while <u>uploading</u> your profile picture.
+          </div>
+        <?php } ?>
+        <?php if (isset($_GET['is']) && ($_GET['is'] == "typ")) { ?>
+          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong>Alert!</strong> Only images of filetype <u>.jpg/.jpeg</u> are allowed.
+          </div>
+        <?php } ?>
+        <?php if (isset($_GET['is']) && ($_GET['is'] == "lar")) { ?>
+          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-danger alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong>Alert!</strong> Only images of below the size of <u>1MB</u> are allowed.
+          </div>
+        <?php } ?>
 
         <div class="col col-12 mb-4">
           <fieldset disabled="disabled">
@@ -141,6 +165,13 @@ if (isset($_SESSION['regno'])) {
           <input type="password" class="form-control mb-2" name="pass" id="pass-input" placeholder="Old Password">
           <input type="password" class="form-control mb-2" name="npass" id="npass-input" placeholder="New Password">
           <input type="password" class="form-control mb-2" name="cpass" id="cpass-input" placeholder="Confirm Password">
+        </div>
+        <div class="col col-12 mb-4">
+          <label for="img-input" class="form-label my-label fs-5 m-0" id="img-label">Profile Picture</label>
+          <p><span class="small text-muted">Supported file type is .jpg and max size is 2MB</span></p>
+          <div class="input-group">
+          <input type="file" class="form-control" id="img-input" name="img">
+          </div>
         </div>
         <div class="col col-12 mb-4">
           <button type="submit" class="btn btn-primary theme-btn px-4 float-end">Submit</button>

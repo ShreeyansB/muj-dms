@@ -52,7 +52,43 @@ if (isset($_SESSION['regno'])) {
     }
   }
 
-  header("Location: /account.php?".$par);
+  if (isset($_FILES['img'])) {
+    $img_name = $_FILES['img']['name'];
+    $img_size = $_FILES['img']['size'];
+    $img_type = $_FILES['img']['type'];
+    $tmp_name = $_FILES['img']['tmp_name'];
+    $error = $_FILES['img']['error'];
+    $img_ext = strtolower(pathinfo($img_name, PATHINFO_EXTENSION));
+
+    if ($error === 0) {
+      if ($img_ext != "jpeg" && $img_ext != "jpg") {
+        $par = $par . "is=typ&";
+      } else if ($img_size > 1048576) {
+        $par = $par . "is=lar&";
+      } else {
+        $img = base64_encode(file_get_contents(addslashes($tmp_name)));
+        $img_upload_sql = "UPDATE student SET picture='$img' WHERE reg_no = $regno";
+        if(mysqli_query($conn, $img_upload_sql)) {
+          $par = $par . "is=don&";
+        } else {
+          $par = $par . "is=err&";
+        }
+      }
+    } else {
+      $par = $par . "is=err&";
+    }
+    // $img_ret_sql = "SELECT picture FROM student WHERE reg_no = $regno";
+    // $img_ret_res = mysqli_query($conn, $img_ret_sql);
+    // $img_ret_row = mysqli_fetch_assoc($img_ret_res);
+    // echo "<html><head><title>Test</title></head><body>";
+    // echo "<hr>";
+    // echo '<img src=data:image;base64,'.$img_ret_row['picture'].' />';
+    // echo "<hr>";
+    // echo "</body></html>";
+    // exit();
+  }
+
+  header("Location: /account.php?" . $par);
   exit();
 } else {
   header("Location: /index.php?");
