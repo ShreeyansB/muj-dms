@@ -147,7 +147,7 @@ if (isset($_SESSION['regno'])) {
 
   <!-- Navs -->
 
-  <div class="container my-4">
+  <div class="container my-4 animate__animated animate__fadeIn">
     <div class="row">
       <div class="col-12" align="center">
         <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
