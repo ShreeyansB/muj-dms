@@ -18,7 +18,7 @@ A simple website made with Bootstrap and backed by MySQL for the purpose of Univ
 ![Screenshot1](ss/desk.png)
 ![Screenshot2](ss/desk-home.png)
 ![Screenshot3](ss/desk-man.png)
-![Screenshot4](ss/pho.png) ![Screenshot4](ss/pho-home1.png) ![Screenshot4](ss/pho-home2.png) ![Screenshot4](ss/pho-man.png)
+![Screenshot4](ss/pho.PNG) ![Screenshot4](ss/pho-home1.PNG) ![Screenshot4](ss/pho-home2.PNG) ![Screenshot4](ss/pho-man.PNG)
 
 
 
