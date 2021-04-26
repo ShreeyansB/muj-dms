@@ -386,10 +386,13 @@ if (isset($_SESSION['regno'])) {
       win.document.write(table.innerHTML);
       win.document.write('</body></html>');
       win.document.getElementById(id.concat('-cap')).classList.remove("invisible");
-      win.document.getElementById('jsPDF').remove();
+      if (win.document.getElementById('jsPDF') != null) {
+        win.document.getElementById('jsPDF').remove();
+      }
       win.document.close();
+      win.focus();
       win.print();
-    }
+    };
 
     const animateCSS = (element, animation, prefix = 'animate__') =>
       new Promise((resolve, reject) => {
