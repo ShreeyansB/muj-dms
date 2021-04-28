@@ -15,7 +15,7 @@ if (isset($_SESSION['regno'])) {
 
   if (isset($_POST['remove_pic'])) {
     $img_remove_sql = "UPDATE student SET picture=NULL WHERE reg_no = $regno";
-    if(mysqli_query($conn, $img_remove_sql)) {
+    if (mysqli_query($conn, $img_remove_sql)) {
       header("Location: /account.php?is=rem&");
       exit();
     }
@@ -60,7 +60,7 @@ if (isset($_SESSION['regno'])) {
     }
   }
 
-  if (isset($_FILES['img'])) {
+  if ($_FILES['img']['size'] != 0 && $_FILES['img']['error'] == 0) {
     $img_name = $_FILES['img']['name'];
     $img_size = $_FILES['img']['size'];
     $img_type = $_FILES['img']['type'];
@@ -73,43 +73,46 @@ if (isset($_SESSION['regno'])) {
       $image = imagecreatefromjpeg($source);
       imagejpeg($image, $source, $quality);
     }
-    compressImage($tmp_name, 85);
-
-    $img_info = getimagesize($tmp_name);
-    $img_w = $img_info[0];
-    $img_h = $img_info[1];
-    $image_src = imagecreatefromjpeg($tmp_name);
-    $image_dst = imagecreatetruecolor(1000, (1000 * $img_h / $img_w));
-    imagecopyresampled(
-      $image_dst,
-      $image_src,
-      0,
-      0,
-      0,
-      0,
-      1000,
-      (1000 * $img_h / $img_w),
-      $img_w,
-      $img_h
-    );
-    imagejpeg($image_dst, $tmp_name);
-
-    if ($error === 0) {
-      if ($img_ext != "jpeg" && $img_ext != "jpg") {
-        $par = $par . "is=typ&";
-      } else if ($img_size > 1048576) {
-        $par = $par . "is=lar&";
-      } else {
-        $img = base64_encode(file_get_contents(addslashes($tmp_name)));
-        $img_upload_sql = "UPDATE student SET picture='$img' WHERE reg_no = $regno";
-        if (mysqli_query($conn, $img_upload_sql)) {
-          $par = $par . "is=don&";
-        } else {
-          $par = $par . "is=err&";
-        }
-      }
+    if ($img_ext != "jpeg" && $img_ext != "jpg") {
+      $par = $par . "is=typ&";
     } else {
-      $par = $par . "is=err&";
+
+      compressImage($tmp_name, 85);
+
+      $img_info = getimagesize($tmp_name);
+      $img_w = $img_info[0];
+      $img_h = $img_info[1];
+      $image_src = imagecreatefromjpeg($tmp_name);
+      $image_dst = imagecreatetruecolor(1000, (1000 * $img_h / $img_w));
+      imagecopyresampled(
+        $image_dst,
+        $image_src,
+        0,
+        0,
+        0,
+        0,
+        1000,
+        (1000 * $img_h / $img_w),
+        $img_w,
+        $img_h
+      );
+      imagejpeg($image_dst, $tmp_name);
+
+      if ($error === 0) {
+        if ($img_size > 1048576) {
+          $par = $par . "is=lar&";
+        } else {
+          $img = base64_encode(file_get_contents(addslashes($tmp_name)));
+          $img_upload_sql = "UPDATE student SET picture='$img' WHERE reg_no = $regno";
+          if (mysqli_query($conn, $img_upload_sql)) {
+            $par = $par . "is=don&";
+          } else {
+            $par = $par . "is=err&";
+          }
+        }
+      } else {
+        $par = $par . "is=err&";
+      }
     }
   }
 

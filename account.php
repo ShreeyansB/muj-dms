@@ -94,61 +94,61 @@ if (isset($_SESSION['regno'])) {
 
       <div class="row pe-5 animate__animated animate__fadeIn animate__fast">
         <?php if (isset($_GET['es']) && ($_GET['es'] == "don")) { ?>
-          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-success alert-dismissible fade show" role="alert">
+          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-success alert-dismissible fade show ms-3 ms-sm-0" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Success!</strong> You have changed your <u>email</u>.
           </div>
         <?php } ?>
         <?php if (isset($_GET['es']) && ($_GET['es'] == "wro")) { ?>
-          <div class="alert animate__animated animate__headShake alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert animate__animated animate__headShake alert-danger alert-dismissible fade show ms-3 ms-sm-0" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Alert!</strong> Entered email is <u>already registered</u> to another user.
           </div>
         <?php } ?>
         <?php if (isset($_GET['ps']) && ($_GET['ps'] == "don")) { ?>
-          <div class="alert animate__animated animate__headShake alert-success alert-dismissible fade show" role="alert">
+          <div class="alert animate__animated animate__headShake alert-success alert-dismissible fade show ms-3 ms-sm-0" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Success!</strong> You have changed your <u>password</u>.
           </div>
         <?php } ?>
         <?php if (isset($_GET['ps']) && ($_GET['ps'] == "wro")) { ?>
-          <div class="alert animate__animated animate__headShake alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert animate__animated animate__headShake alert-danger alert-dismissible fade show ms-3 ms-sm-0" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Alert!</strong> Entered password <u>does not match</u> current password.
           </div>
         <?php } ?>
         <?php if (isset($_GET['ps']) && ($_GET['ps'] == "dif")) { ?>
-          <div class="alert animate__animated animate__headShake alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert animate__animated animate__headShake alert-danger alert-dismissible fade show ms-3 ms-sm-0 ms-3 ms-sm-0" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Alert!</strong> Entered passwords <u>do not match</u> password.
           </div>
         <?php } ?>
         <?php if (isset($_GET['is']) && ($_GET['is'] == "don")) { ?>
-          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-success alert-dismissible fade show" role="alert">
+          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-success alert-dismissible fade show ms-3 ms-sm-0" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Success!</strong> You have changed your <u>profile picture</u>.
           </div>
         <?php } ?>
         <?php if (isset($_GET['is']) && ($_GET['is'] == "rem")) { ?>
-          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-success alert-dismissible fade show" role="alert">
+          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-success alert-dismissible fade show ms-3 ms-sm-0" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Success!</strong> You have removed your <u>profile picture</u>.
           </div>
         <?php } ?>
         <?php if (isset($_GET['is']) && ($_GET['is'] == "err")) { ?>
-          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-danger alert-dismissible fade show ms-3 ms-sm-0" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Error!</strong> There was a problem while <u>uploading</u> your profile picture.
           </div>
         <?php } ?>
         <?php if (isset($_GET['is']) && ($_GET['is'] == "typ")) { ?>
-          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-danger alert-dismissible fade show ms-3 ms-sm-0" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Alert!</strong> Only images of filetype <u>.jpg/.jpeg</u> are allowed.
           </div>
         <?php } ?>
         <?php if (isset($_GET['is']) && ($_GET['is'] == "lar")) { ?>
-          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-danger alert-dismissible fade show" role="alert">
+          <div class="alert animate__animated animate__headShake animate__animated animate__headShake  alert-danger alert-dismissible fade show ms-3 ms-sm-0" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             <strong>Alert!</strong> Only images of below the size of <u>1MB</u> are allowed.
           </div>

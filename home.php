@@ -89,6 +89,7 @@ if (isset($_SESSION['regno'])) {
       </button>
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav ms-auto">
+
           <li class="nav-item">
             <a href="https://jaipur.manipal.edu/" class="nav-link text-black-50">Info</a>
           </li>
