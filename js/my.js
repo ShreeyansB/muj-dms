@@ -50,7 +50,7 @@ function calcGPA(num, credits) {
     document.getElementById('gpa-text').innerHTML = gpa;
   } else {
   var node = document.createElement("DIV");
-  node.classList.add('row','mt-1');
+  node.classList.add('row','mt-0');
   var span = document.createElement("SPAN");
   span.classList.add('ps-0');
   span.innerHTML = '<text class="fs-3" style="font-weight:600 !important;">Expected GPA: </text><text class="font-monospace fw-bold fs-3" id="gpa-text">' + gpa + '</text>';
