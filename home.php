@@ -83,9 +83,10 @@ if (isset($_SESSION['regno'])) {
 
   function echoGradeSelector($i, $courses)
   {
-    echo '<div class="col col-5 float-start pt-2 mb-2">
+    echo '<div class="col col-4 float-start pt-2 mb-2">
     <p>', '<b>', $i + 1, '.  ', '</b>', $courses[$i]->name, ' (', $courses[$i]->code, ') ', '</p>
   </div>
+  <div class="col col-1"></div>
   <div class="col col-7 float-end mb-2" id="my-grp">
     <div class="btn-group float-end">
       <input type="radio" class="btn-check" name="radioToggleButton', $i + 1, '" id="radioToggleButton', $i + 1, '1" autocomplete="off" checked="true" value="a+">
