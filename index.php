@@ -140,7 +140,7 @@
   <!-- Footer -->
   <footer class="bg-dark py-4" id="my-footer">
     <div class="container">
-      <p class="text-center text-white mb-0">&copy; Shreeyans Bahadkar, Manipal University,
+      <p class="text-center text-white mb-0">&copy; <a href="https://github.com/ShreeyansB/muj-dms" alt="github" style="color: #fff;">Shreeyans Bahadkar</a>, Manipal University,
         jaipur.manipal.edu, Dehmi
         Kalan, Near GVK Toll Plaza, Jaipur-Ajmer Expressway, Jaipur, Rajasthan 303007.</p>
     </div>

@@ -1,3 +1,13 @@
+:root {
+  --col1: #5376b9;
+  --col2: #4067b1;
+  --col3: #3a5d9f;
+  --col4: #33528e;
+  --col5: #2d487c;
+  --col6: #263e6a;
+  --col7: #203459;
+}
+
 .selectDisable {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -128,3 +138,47 @@ button[aria-selected='false'] {
   text-decoration-style: wavy;
   text-decoration-color: red;
 }
+
+.my-rad-1 {
+  color: #fff !important;
+  background-color: var(--col1) !important;
+  border-color: transparent !important;
+}
+
+.my-rad-2 {
+  color: #fff !important;
+  background-color: var(--col2) !important;
+  border-color: transparent !important;
+}
+.my-rad-3 {
+  color: #fff !important;
+  background-color: var(--col3) !important;
+  border-color: transparent !important;
+}
+.my-rad-4 {
+  color: #fff !important;
+  background-color: var(--col4) !important;
+  border-color: transparent !important;
+}
+.my-rad-5 {
+  color: #fff !important;
+  background-color: var(--col5) !important;
+  border-color: transparent !important;
+}
+.my-rad-6 {
+  color: #fff !important;
+  background-color: var(--col6) !important;
+  border-color: transparent !important;
+}
+.my-rad-7 {
+  color: #fff !important;
+  background-color: var(--col7) !important;
+  border-color: transparent !important;
+}
+
+input.btn-check:checked + label {
+  background-color: #131f35 !important;
+  box-shadow: 0px 0px 17px 2px #131f358c !important;
+  transform: scale(1.12);
+}
+

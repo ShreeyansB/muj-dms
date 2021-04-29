@@ -49,6 +49,62 @@ if (isset($_SESSION['regno'])) {
   $img_ret_sql = "SELECT picture FROM student WHERE reg_no = $reg_no";
   $img_ret_res = mysqli_query($conn, $img_ret_sql);
   $img_ret_row = mysqli_fetch_assoc($img_ret_res);
+  $calc_sql = "SELECT learning.course_id, course.course_name, course.course_credits FROM student JOIN class ON (reg_no = $reg_no AND student.class_id = class.class_id) JOIN learning ON (student.reg_no = learning.reg_no) JOIN course ON (learning.course_id = course.course_id) ORDER BY course_id";
+  $calc_res = mysqli_query($conn, $calc_sql);
+  $courses = (array) null;
+  $grade_list = array("A+", "A", "B", "C", "D", "E", "F");
+  $point_list = array(10, 9, 8, 7, 6, 5, 0);
+  $credit_list = (array) null;
+
+  class Course
+  {
+    public $code;
+    public $name;
+    public $credits;
+
+    function setCourse($code, $name, $credits)
+    {
+      $this->code = $code;
+      $this->name = $name;
+      $this->credits = $credits;
+    }
+  }
+  $num_courses = 0;
+  while ($calc_row = mysqli_fetch_assoc($calc_res)) {
+    $course = new Course();
+    $code = $calc_row['course_id'];
+    $name = $calc_row['course_name'];
+    $credits = $calc_row['course_credits'];
+    array_push($credit_list, (int) $credits);
+    $course->setCourse($code, $name, $credits);
+    array_push($courses, $course);
+    $num_courses++;
+  }
+
+  function echoGradeSelector($i, $courses)
+  {
+    echo '<div class="col col-5 float-start pt-2 mb-2">
+    <p>', '<b>', $i + 1, '.  ', '</b>', $courses[$i]->name, ' (', $courses[$i]->code, ') ', '</p>
+  </div>
+  <div class="col col-7 float-end mb-2" id="my-grp">
+    <div class="btn-group float-end">
+      <input type="radio" class="btn-check" name="radioToggleButton', $i + 1, '" id="radioToggleButton', $i + 1, '1" autocomplete="off" checked="true" value="a+">
+      <label class="btn btn-secondary my-rad-1" for="radioToggleButton', $i + 1, '1">A+</label>
+      <input type="radio" class="btn-check" name="radioToggleButton', $i + 1, '" id="radioToggleButton', $i + 1, '2" autocomplete="off" value="a">
+      <label class="btn btn-secondary my-rad-2" for="radioToggleButton', $i + 1, '2">A</label>
+      <input type="radio" class="btn-check" name="radioToggleButton', $i + 1, '" id="radioToggleButton', $i + 1, '3" autocomplete="off" value="b">
+      <label class="btn btn-secondary my-rad-3" for="radioToggleButton', $i + 1, '3">B</label>
+      <input type="radio" class="btn-check" name="radioToggleButton', $i + 1, '" id="radioToggleButton', $i + 1, '4" autocomplete="off" value="c">
+      <label class="btn btn-secondary my-rad-4" for="radioToggleButton', $i + 1, '4">C</label>
+      <input type="radio" class="btn-check" name="radioToggleButton', $i + 1, '" id="radioToggleButton', $i + 1, '5" autocomplete="off" value="d">
+      <label class="btn btn-secondary my-rad-5" for="radioToggleButton', $i + 1, '5">D</label>
+      <input type="radio" class="btn-check" name="radioToggleButton', $i + 1, '" id="radioToggleButton', $i + 1, '6" autocomplete="off" value="e">
+      <label class="btn btn-secondary my-rad-6" for="radioToggleButton', $i + 1, '6">E</label>
+      <input type="radio" class="btn-check" name="radioToggleButton', $i + 1, '" id="radioToggleButton', $i + 1, '7" autocomplete="off" value="f">
+      <label class="btn btn-secondary my-rad-7" for="radioToggleButton', $i + 1, '7">F</label>
+    </div>
+  </div>';
+  }
 } else {
   header("Location: index.php?");
   exit();
@@ -71,7 +127,6 @@ if (isset($_SESSION['regno'])) {
   <script defer src="js/all.js"></script>
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -175,6 +230,9 @@ if (isset($_SESSION['regno'])) {
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="grades-tab" data-bs-toggle="tab" data-bs-target="#grades" type="button" role="tab" aria-controls="grades" aria-selected="false">Grades</button>
+          </li>
+          <li class="nav-item" role="calculate">
+            <button class="nav-link" id="calculate-tab" data-bs-toggle="tab" data-bs-target="#calculate" type="button" role="tab" aria-controls="calculate" aria-selected="false">Calculate</button>
           </li>
         </ul>
         <div class="col-12 my-4" align="center">
@@ -357,6 +415,23 @@ if (isset($_SESSION['regno'])) {
                 <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="jsPDF" onclick="dlAsPDF('grades-table')">Download as PDF</button>
               </div>
             </div>
+
+            <div class="tab-pane fade mt-3" id="calculate" role="tabpanel" aria-labelledby="calculate-tab">
+              <div class="container text-start" id="calc-gpa-container">
+                <b class="fs-5">Select expected grades in given subjects:-</b>
+                <br><br>
+                <form method="post" name="gpa-form">
+                  <div class="row">
+                    <?php
+                    for ($x = 0; $x < count($courses); $x++) {
+                      echoGradeSelector($x, $courses);
+                    }
+                    ?>
+                  </div>
+                  <button type="button" class="btn theme-btn float-end" onclick="<?php echo 'calcGPA(', $num_courses, ',', json_encode($credit_list), ')'; ?>">Calculate</button>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -367,13 +442,13 @@ if (isset($_SESSION['regno'])) {
   <!-- Footer -->
   <footer class="bg-dark py-4" id="my-footer">
     <div class="container">
-      <p class="text-center text-white mb-0">&copy; Shreeyans Bahadkar, Manipal University,
+      <p class="text-center text-white mb-0">&copy; <a href="https://github.com/ShreeyansB/muj-dms" alt="github" style="color: #fff;">Shreeyans Bahadkar</a>, Manipal University,
         jaipur.manipal.edu, Dehmi
         Kalan, Near GVK Toll Plaza, Jaipur-Ajmer Expressway, Jaipur, Rajasthan 303007.</p>
     </div>
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
-
+  <script type="text/javascript" src="js/my.js"></script>
   <script>
     function dlAsPDF(id) {
       let table = document.getElementById(id).parentNode;
