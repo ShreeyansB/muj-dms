@@ -46,8 +46,7 @@ function calcGPA(num, credits) {
   gpa = gpa.toFixed(2);
 
   if (document.getElementById('gpa-text') != null) {
-    console.log('poo');
-    animateCSS('gpa-container', 'flipInX');
+    animateCSSGPA('gpa-container', 'flipInX');
     document.getElementById('gpa-text').innerHTML = gpa;
   } else {
     var node = document.createElement("DIV");
@@ -58,11 +57,11 @@ function calcGPA(num, credits) {
     span.innerHTML = '<text class="fs-3" style="font-weight:600 !important;">Expected GPA: </text><text class="font-monospace fw-bold fs-3" id="gpa-text">' + gpa + '</text>';
     node.appendChild(span);
     document.getElementById("calc-gpa-container").appendChild(node);
-    animateCSS('gpa-container', 'flipInX');
+    animateCSSGPA('gpa-container', 'flipInX');
   }
 };
 
-const animateCSS = (element, animation, prefix = 'animate__') =>
+const animateCSSGPA = (element, animation, prefix = 'animate__') =>
   new Promise((resolve, reject) => {
     const animationName = `${prefix}${animation}`;
     const node = document.getElementById(element);

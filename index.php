@@ -168,13 +168,27 @@
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
     var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
       return new bootstrap.Popover(popoverTriggerEl)
-    })
-    let button = document.querySelector('#theme-btn')
+    });
+    let button = document.querySelector('#theme-btn');
+
+    let isDarkMode = false;
+    if (sessionStorage.getItem("isDarkMode") != null) {
+      isDarkMode = sessionStorage.getItem("isDarkMode");
+      isDarkMode = (isDarkMode == "true") ? true : false;
+      if (isDarkMode) {
+        document.documentElement.classList.toggle('dark-mode');
+        document.documentElement.classList.toggle('inverted');
+      }
+    }
+    sessionStorage.setItem("isDarkMode", isDarkMode);
+
     button.addEventListener('click', () => {
       animateCSS('.flip-icon', 'flip');
-      document.documentElement.classList.toggle('dark-mode')
-      document.documentElement.classList.toggle('inverted')
-    })
+      isDarkMode = !isDarkMode;
+      sessionStorage.setItem("isDarkMode", isDarkMode);
+      document.documentElement.classList.toggle('dark-mode');
+      document.documentElement.classList.toggle('inverted');
+    });
   </script>
 </body>
 

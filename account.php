@@ -228,8 +228,22 @@ if (isset($_SESSION['regno'])) {
     });
 
     let button = document.querySelector('#theme-btn');
+
+    let isDarkMode = false;
+    if (sessionStorage.getItem("isDarkMode") != null) {
+      isDarkMode = sessionStorage.getItem("isDarkMode");
+      isDarkMode = (isDarkMode == "true") ? true : false;
+      if (isDarkMode) {
+        document.documentElement.classList.toggle('dark-mode');
+        document.documentElement.classList.toggle('inverted');
+      }
+    }
+    sessionStorage.setItem("isDarkMode", isDarkMode);
+
     button.addEventListener('click', () => {
       animateCSS('.flip-icon', 'flip');
+      isDarkMode = !isDarkMode;
+      sessionStorage.setItem("isDarkMode", isDarkMode);
       document.documentElement.classList.toggle('dark-mode');
       document.documentElement.classList.toggle('inverted');
 
