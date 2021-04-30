@@ -4,7 +4,6 @@ function calcGPA(num, credits) {
   var j;
   var grade_points = [];
 
-
   function convGrade(grade) {
     switch (grade) {
       case 'a+':
@@ -46,15 +45,36 @@ function calcGPA(num, credits) {
   var gpa = numerator / denominator;
   gpa = gpa.toFixed(2);
 
-  if(document.getElementById('gpa-text')!= null) {
+  if (document.getElementById('gpa-text') != null) {
+    console.log('poo');
+    animateCSS('gpa-container', 'flipInX');
     document.getElementById('gpa-text').innerHTML = gpa;
   } else {
-  var node = document.createElement("DIV");
-  node.classList.add('row','mt-0');
-  var span = document.createElement("SPAN");
-  span.classList.add('ps-0');
-  span.innerHTML = '<text class="fs-3" style="font-weight:600 !important;">Expected GPA: </text><text class="font-monospace fw-bold fs-3" id="gpa-text">' + gpa + '</text>';
-  node.appendChild(span);
-  document.getElementById("calc-gpa-container").appendChild(node);
+    var node = document.createElement("DIV");
+    node.classList.add('row', 'mt-0');
+    node.id = "gpa-container";
+    var span = document.createElement("SPAN");
+    span.classList.add('ps-0');
+    span.innerHTML = '<text class="fs-3" style="font-weight:600 !important;">Expected GPA: </text><text class="font-monospace fw-bold fs-3" id="gpa-text">' + gpa + '</text>';
+    node.appendChild(span);
+    document.getElementById("calc-gpa-container").appendChild(node);
+    animateCSS('gpa-container', 'flipInX');
   }
-}
+};
+
+const animateCSS = (element, animation, prefix = 'animate__') =>
+  new Promise((resolve, reject) => {
+    const animationName = `${prefix}${animation}`;
+    const node = document.getElementById(element);
+    node.classList.add(`${prefix}animated`, animationName);
+
+    function handleAnimationEnd(event) {
+      event.stopPropagation();
+      node.classList.remove(`${prefix}animated`, animationName);
+      resolve('Animation ended');
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd, {
+      once: true
+    });
+  });
