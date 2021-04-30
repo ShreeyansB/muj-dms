@@ -52,8 +52,6 @@ if (isset($_SESSION['regno'])) {
   $calc_sql = "SELECT learning.course_id, course.course_name, course.course_credits FROM student JOIN class ON (reg_no = $reg_no AND student.class_id = class.class_id) JOIN learning ON (student.reg_no = learning.reg_no) JOIN course ON (learning.course_id = course.course_id) ORDER BY course_id";
   $calc_res = mysqli_query($conn, $calc_sql);
   $courses = (array) null;
-  $grade_list = array("A+", "A", "B", "C", "D", "E", "F");
-  $point_list = array(10, 9, 8, 7, 6, 5, 0);
   $credit_list = (array) null;
 
   class Course
