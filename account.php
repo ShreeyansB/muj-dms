@@ -120,7 +120,7 @@ if (isset($_SESSION['regno'])) {
         <?php if (isset($_GET['ps']) && ($_GET['ps'] == "dif")) { ?>
           <div class="alert animate__animated animate__headShake alert-danger alert-dismissible fade show ms-3 ms-sm-0 ms-3 ms-sm-0" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            <strong>Alert!</strong> Entered passwords <u>do not match</u> password.
+            <strong>Alert!</strong> Entered passwords <u>do not match</u>.
           </div>
         <?php } ?>
         <?php if (isset($_GET['is']) && ($_GET['is'] == "don")) { ?>

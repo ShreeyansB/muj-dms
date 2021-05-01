@@ -67,7 +67,7 @@
             </div>
             <div class="mb-3">
               <label for="inputRegNo" class="form-label">Registration Number</label>
-              <input type="text" class="form-control" placeholder="Reg No" id="inputRegNo" name="regno">
+              <input type="number" class="form-control" placeholder="Reg No" id="inputRegNo" name="regno">
             </div>
             <div class="mb-3">
               <label for="inputPasswd" class="form-label">Password</label>
@@ -77,10 +77,10 @@
               <div class="alert alert-danger p-2" role="alert">Registration Number Required</div>
             <?php } ?>
             <?php if (isset($_GET['err']) && ($_GET['err'] == "pr")) { ?>
-              <div class="alert alert-danger" role="alert">Password Required</div>
+              <div class="alert alert-danger p-2" role="alert">Password Required</div>
             <?php } ?>
             <?php if (isset($_GET['err']) && ($_GET['err'] == "in")) { ?>
-              <div class="alert alert-danger" role="alert">Incorrect Registration Number or Password</div>
+              <div class="alert alert-danger p-2" role="alert">Incorrect Registration Number or Password</div>
             <?php } ?>
             <button type="submit" class="btn btn-primary mt-2 w-25" id="login-submit"><text class="text-white">Login</text></button>
           </form>

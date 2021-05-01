@@ -13,6 +13,7 @@ if (isset($_POST['regno']) && isset($_POST['password'])) {
   }
   $regno = validate($_POST['regno']);
   $password = validate($_POST['password']);
+
   if (empty($regno)) {
     header("Location: /index.php?err=ur");
     exit();

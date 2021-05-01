@@ -267,7 +267,7 @@ if (isset($_SESSION['regno'])) {
                     </tbody>
                   </table>
                 </div>
-                <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="jsPDF" onclick="dlAsPDF('attendance-table')">Download as PDF</button>
+                <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="current-date-time" onclick="dlAsPDF('attendance-table')">Download as PDF</button>
               </div>
             </div>
             <div class="tab-pane fade" id="timetable" role="tabpanel" aria-labelledby="timetable-tab">
@@ -321,7 +321,7 @@ if (isset($_SESSION['regno'])) {
                     ?>
                   </tbody>
                 </table>
-                <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="jsPDF" onclick="dlAsPDF('timetable-table')">Download as PDF</button>
+                <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="current-date-time" onclick="dlAsPDF('timetable-table')">Download as PDF</button>
               </div>
             </div>
             <div class="tab-pane fade mt-3" id="courses" role="tabpanel" aria-labelledby="courses-tab">
@@ -356,7 +356,7 @@ if (isset($_SESSION['regno'])) {
                   </tbody>
                 </table>
               </div>
-              <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="jsPDF" onclick="dlAsPDF('courses-table')">Download as PDF</button>
+              <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="current-date-time" onclick="dlAsPDF('courses-table')">Download as PDF</button>
             </div>
             <div class="tab-pane fade mt-3" id="grades" role="tabpanel" aria-labelledby="grades-tab">
               <div class="container">
@@ -411,7 +411,7 @@ if (isset($_SESSION['regno'])) {
                     </table>
                   </div>
                 </div>
-                <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="jsPDF" onclick="dlAsPDF('grades-table')">Download as PDF</button>
+                <button type="button" class=" mt-2 btn theme-btn" data-bs-toggle="button" autocomplete="off" id="current-date-time" onclick="dlAsPDF('grades-table')">Download as PDF</button>
               </div>
             </div>
 
@@ -447,11 +447,11 @@ if (isset($_SESSION['regno'])) {
     </div>
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
-  <script type="text/javascript" src="js/my.js"></script>
+  <script type="text/javascript" src="js/gpa_calc.js"></script>
   <script>
     function dlAsPDF(id) {
       let table = document.getElementById(id).parentNode;
-      var win = window.open('', '', 'height=720,width=1200');
+      let win = window.open('', '', 'height=720,width=1200');
       win.document.write('<html><head>');
       win.document.write('<link rel="stylesheet" href="css/bootstrap.min.css">');
       win.document.write('<link rel="stylesheet" href="css/styles.css">');
@@ -461,8 +461,8 @@ if (isset($_SESSION['regno'])) {
       win.document.write(table.innerHTML);
       win.document.write('</body></html>');
       win.document.getElementById(id.concat('-cap')).classList.remove("invisible");
-      if (win.document.getElementById('jsPDF') != null) {
-        win.document.getElementById('jsPDF').remove();
+      if (win.document.getElementById('current-date-time') != null) {
+        win.document.getElementById('current-date-time').remove();
       }
       win.document.close();
       win.focus();
