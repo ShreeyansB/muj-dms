@@ -7,6 +7,7 @@ A simple website made with Bootstrap and backed by MySQL for the purpose of Univ
 * CSS
 * JS
 * PHP
+* MySQL
 
 ## Features
 * Easy to Use 
