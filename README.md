@@ -15,8 +15,6 @@ A simple website made with Bootstrap and backed by MySQL for the purpose of Univ
 
 ## Website
 
-### &nbsp;&nbsp; Working version can be found here: [MUJ DMS](http://mujdms.unaux.com/?i=1)
-
 ![Screenshot1](ss/desk.png)
 ![Screenshot2](ss/desk-home.png)
 ![Screenshot3](ss/desk-man.png)
