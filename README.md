@@ -12,6 +12,8 @@ A simple website made with Bootstrap and backed by MySQL for the purpose of Univ
 ## Features
 * Easy to Use 
 * Dark Mode
+* Responsive
+* SGPA Estimator
 * Download/Print as PDF
 
 ## Website
